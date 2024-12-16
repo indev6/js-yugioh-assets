@@ -171,9 +171,7 @@ async function playAudio(status) {
     } catch {
 
     }
-    
 }
-
 
 function init () {
     state.fieldCards.player.style.display = "none";

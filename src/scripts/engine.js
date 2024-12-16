@@ -89,6 +89,10 @@ async function setCardsField(cardId) {
     state.fieldCards.player.style.display = "block";
     state.fieldCards.computer.style.display = "block";
 
+    state.cardSprites.avatar.src = "";
+    state.cardSprites.name.innerText = "";
+    state.cardSprites.type.innerText = "";
+
     state.fieldCards.player.src = cardData[cardId].img;
     state.fieldCards.computer.src = cardData[computerCardId].img;
 
@@ -113,16 +117,15 @@ async function  checkDuelResults(playerCardId, computerCardId) {
 
     if(playerCard.winOf.includes(computerCardId)) {
         duelResults = "WIN";
-        await playAudio(duelResults);
         state.score.playerScore++;
     };
 
     if(playerCard.loseOf.includes(computerCardId)) {
         duelResults = "LOSE";
-        await playAudio(duelResults);
         state.score.computerScore++;
     };
 
+    await playAudio(duelResults);
     return duelResults;
 }
 
@@ -161,14 +164,27 @@ async function resetDuel() {
 }
 
 async function playAudio(status) {
-    const audio = new Audio(`./src/assets/audios/${status}.wav`)
-    audio.play();
+    const audio = new Audio(`./src/assets/audios/${status}.wav`);
+    try{
+        audio.play();
+
+    } catch {
+
+    }
+    
 }
 
 
 function init () {
+    state.fieldCards.player.style.display = "none";
+    state.fieldCards.computer.style.display = "none";
+
     drawCards(5, state.playerSides.player1);
     drawCards(5, state.playerSides.computer);
+
+    const bgm = document.getElementById("bgm");
+    //bgm.play();
+    bgm.volume = 0.2;
 };
 
 
